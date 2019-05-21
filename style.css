@@ -1,0 +1,92 @@
+h1{
+	
+	padding: 30px 20px 20px 20px;
+	text-align: center;
+	font-family: 'Luckiest Guy', cursive;
+	color: black;
+	margin: 5px;
+	font-size: 50px;
+	background-color: white;
+
+	
+}
+
+.details{
+	border: 3px solid black;
+	
+	
+}
+.ind{
+	padding: 0px 20px 20px 5px;
+	width: 23%;
+	display: inline-block;
+	color: white;
+
+}
+button{
+	font-family: 'Luckiest Guy', cursive;
+	font-weight: bold;
+	font-size: 25px;
+
+}
+
+
+
+#iniCalculate{
+	margin-left: auto;
+	margin-right: auto;
+	display: block;
+	width: 20%;
+	text-align: center;
+}
+
+	
+#result{
+	display: inline;
+	background-color: #33cc33;
+	float: left;
+	width: 25%;
+	text-align: center;
+	font-size: 35px;
+	opacity: 0.8;
+}
+
+body{
+	font-family: 'Allura', cursive;
+	font-weight: bold;
+	font-size: 30px;
+	background-image: linear-gradient(141deg, #9fb8ad 0%, #1fc8db 51%, #2cb5e8 75%);	
+
+}
+
+#tota{
+	
+	background-color: #e64c4c;
+	display: inline;
+	width: 25%;
+	float: right;
+	text-align: center;
+	font-size: 35px;
+}
+
+
+.ai{
+	display: block;
+	margin: auto;
+	text-align: center;
+	
+
+}
+
+#itemName{
+	font-size: 1.3em;
+}
+
+
+.itemList{
+	border: 2px;
+	color: white;
+	width:18%;
+	
+	padding: 10px 10px 10px 10px;
+}  
