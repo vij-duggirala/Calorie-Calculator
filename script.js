@@ -1,7 +1,9 @@
 var sum=0;
 var req;
 var lsList=[];
-
+var n;
+var Nn;
+let display=document.getElementById("display");
 let inSum=0;
 let v=0;
 let list= document.getElementById("list");
@@ -13,6 +15,7 @@ let item = document.createElement("div");
 	itemU.setAttribute('type', "text" );		   
 	itemU.setAttribute('id' , "itemU");
 	itemU.setAttribute('class' , 'ai');
+	itemU.setAttribute('size' , "35");
 let fat = document.createElement("div");
 	fat.textContent="Fats(in g) :";
 	fat.setAttribute('class' ,'ai');
@@ -63,17 +66,25 @@ let i=0;
 
 
 function Total(){
-	tot.innerHTML = "some";
+	
 	let a=setInterval( function(){
 			if(v <= sum)
 			{ tot.innerHTML="Your total intake is<br>" + v + "kcal"; v++; }
-		else
-        	clearInterval(a);
-	}, 2);	
-	if (sum > req){
-		alert("You have consumed excess calories!!");
-	}
+		else{
+        	clearInterval(a); alertmsg();}
+	}, 1);	
+
 }
+
+function alertmsg(){
+	let t= (sum/req)*100;	
+	if (sum > req)
+		alert("You have consumed excess calories!! by "+(t.toFixed(2)-100)+"%");
+	else 		
+		alert("You have consumed "+t.toFixed(2)+"% of daily calories!");
+
+}
+
 
 
 
@@ -81,7 +92,7 @@ function displayList(name, ssum){
 	let itemList = document.createElement("li");
 	itemList.innerHTML =name + "<br>" + ssum+ "kcal";
 	itemList.setAttribute('class' , 'itemList');
-	let display=document.getElementById("display");
+	
 	display.appendChild(itemList);
 
 	
@@ -93,7 +104,7 @@ function addLs(name, ssum){
 	var obj = {
 		nam: name,
 		calorie: ssum
-		};
+		}
 	lsList.push(obj);	
 	window.localStorage.setItem('ls' , JSON.stringify(lsList));
 
@@ -126,7 +137,10 @@ addBtn.onclick = function(){
 		fatU.value='';
 		carbU.value='';
 		proU.value='';
-		Total();		
+		Total();
+		let d= new Date();
+		n = d.getDate();
+		window.localStorage.setItem('date' , n); 		
 		}
 
 let inputAge= document.getElementById("age");	
@@ -163,8 +177,11 @@ function calculate(a, h , w , t){
  	req = parseFloat(bmr*1.53);
 	
 	reqCalorie.innerHTML = "Required Calorie Intake is:<br> " + req.toFixed(2) + "kcal" ;
-	
+	let b=setInterval( function(){
+			alert("A gentle reminder to stay hydrated");
+	}, (4*3600*1e3));	
 	Add();
+	Total();
 
 	
 }
@@ -174,18 +191,38 @@ window.addEventListener('load' , extract);
 function extract(){
 	let j;
 	let details = JSON.parse(window.localStorage.getItem('details'));
-	calculate(details.age, details.height, details.weight , details.check);	
-	lsList = JSON.parse(window.localStorage.getItem('ls'));
-	if(lsList)
-		for(j=0;j<lsList.length; j++){
-			sum=sum+(lsList[j].calorie);
-			displayList(lsList[j].nam , lsList[j].calorie);}
+	if(details)
+		calculate(details.age, details.height, details.weight , details.check);	
+	
+	let Nd = new Date();
+	Nn=Nd.getDate();
+        lsList = JSON.parse(window.localStorage.getItem('ls'));	
+	if(!lsList)
+		lsList=[];
+	n=parseInt(window.localStorage.getItem('date'));
+	if(n)
+	{
+		if( n===Nn)
+		{	
+			if(lsList)
+			 for(j=0;j<lsList.length; j++){
+				sum=sum+(lsList[j].calorie);
+				displayList(lsList[j].nam , lsList[j].calorie);}
 			 
 		
-	else
-		lsList =[];
-	tota.appendChild(tot);	
-	Total();
+			else
+				 lsList =[]; 
+				
+		}
+		else
+		{	
+				
+		lsList=[];			
+		Reset();
+		} 
+
+	}
+
 	inputAge.value = details.age;
 	inputHeight.value = details.height;
 	inputWeight.value = details.weight;
@@ -197,5 +234,12 @@ function extract(){
 		
 
 
-
+function Reset(){
+	window.localStorage.removeItem('ls');
+	while(display.firstChild){
+		display.removeChild(display.firstChild);
+	}
+	window.localStorage.setItem('date' , Nn);
+	
+}
 
